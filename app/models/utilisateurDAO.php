@@ -22,7 +22,7 @@ class utilisateurDAO {
         return $utilisateur;
 
     }
-    public function insert_utilisateur($categorie)
+    public function insert_utilisateur($utilisateur)
     {
         $query = "INSERT INTO utilisateur(email, nom, pswd, role) 
                   VALUES (:email, :nom, :pswd, :role )";
