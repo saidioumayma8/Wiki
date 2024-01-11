@@ -43,7 +43,7 @@
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
                         <a class="logo" href="index.html">
-                            <img src="images/icon/logo.png" alt="CoolAdmin" />
+                            <img src="./WhatsApp Image 2024-01-08 at 14.41.27_d532e9ea.jpg" alt="Cool Admin" width="30%"; height="30%"/>
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -57,41 +57,65 @@
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
                         <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-tachometer-alt"></i>Home</a>
+                            <a  href="#">Home</a>
                         </li>
-                    
-                        <li>
-                            <a href="table.html">
-                                <i class="fas fa-table"></i>Tables</a>
-                        </li>
-                        <li>
-                            <a href="form.html">
-                                <i class="far fa-check-square"></i>Forms</a>
-                        </li>
-
+                       
                         <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-copy"></i>Pages</a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-                                    <a href="login.html">Login</a>
-                                </li>
-                                <li>
-                                    <a href="register.html">Register</a>
-                                </li>
-                                <li>
-                                    <a href="forget-pass.html">Forget Password</a>
-                                </li>
-                            </ul>
+                                    <a href="register.html">sign up</a>
                         </li>
+                       
+                        
                     </ul>
                 </div>
             </nav>
         </header>
         <!-- END HEADER MOBILE-->
 
-<html>
+        <!-- MENU SIDEBAR-->
+        <aside class="menu-sidebar d-none d-lg-block">
+            <div class="logo">
+                <a href="#">
+                    <img src="./WhatsApp Image 2024-01-08 at 14.41.27_d532e9ea.jpg" alt="Cool Admin" width="40%"; height="40%"/>
+                </a>
+            </div>
+            <div class="menu-sidebar__content js-scrollbar1">
+                <nav class="navbar-sidebar">
+                    <ul class="list-unstyled navbar__list">
+                        <li class="active has-sub">
+                            <a class="js-arrow" href="#">
+                                <i href="index.html" class="fa-solid fa-arrow-right"></i>Home</a>
+                        </li>
+                        <li>
+                            <a href="signup.php">
+                                <i  class="fas fa-desktop"></i>sign up</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <!-- END MENU SIDEBAR-->
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <!-- HEADER DESKTOP-->
+            <header class="header-desktop">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="header-wrap">
+                            <form class="form-header" action="" method="POST">
+                                <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for Article &amp; Category..." />
+                                <button class="au-btn--submit" type="submit">
+                                    <i class="zmdi zmdi-search"></i>
+                                </button>
+                            </form>
+                           
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- HEADER DESKTOP-->
+
+7
 <body>
 
     <!-- Jquery JS-->

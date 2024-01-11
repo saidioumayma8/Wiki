@@ -1,88 +1,65 @@
 <?php
-include_once "Database.php" ;
-include_once "categorie.php" ;
-
-
-class categorieDAO {
+include 'models\categoryModel.php';
+class categoryDAO{
     private $db;
-    public function __construct(){
-        $this->db = Database::getInstance()->getConnection();
+    public function __construct()
+    {
+    $this->db = DataBaseConection::getInstance()->getConnection();
     }
 
-    public function get_categorie(){
-        $query = "SELECT * FROM categorie";
+    public function getAllCategorys(){
+        $query = "SELECT * FROM category";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $categorysData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $categorys = array();
+        foreach($categorysData as $category){
+            $result = new category($category['category_id'], $category['category_name'], $category['category_date']);
+            $categorys[] = $result;        
+        } 
+        return $categorys;
+    }
+    public function insertCategory($category){
+        $query ="INSERT INTO category (category_id, category_name, category_date) VALUES (:category_id, :category_name, :category_date)";
+        $stmt = $this->db->prepare($query);
+
+        $id = $category->getCategoryId();
+        $name = $category->getCategoryName();
+        $date = $category->getCategoryDate();
+
+        $stmt->bindParam(':category_id', $id);
+        $stmt->bindParam(':category_name', $name);
+        $stmt->bindParam(':category_date', $date);
+
+        $stmt->execute();
+
+
+    }
+    public function getCategoryById($id){
+        $query = "SELECT * FROM category WHERE category_id = $id";
         $stmt = $this->db->query($query);
-        $stmt -> execute();
-        $categorieData = $stmt->fetchAll();
-        $categorie= array();
-        foreach ($categorieData as $P) {
-            $categorie[] = new categorie($P["cat_date"],$P["nom_cat"]
-            );
-        }
-        return $categorie;
-
+        $stmt->execute();
+        $categoryData = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $categoryData;
     }
-    public function insert_categories($categorie)
-    {
-        $query = "INSERT INTO categorie(cat_date, nom_cat) 
-                  VALUES (:cate_date, :nom_cat)";
 
+    
+    public function updateCategory($caty){
+        $query = "UPDATE category SET category_name = :categoryName , category_date = :categoryDate WHERE category_id = :categoryId";
         $stmt = $this->db->prepare($query);
-
-        $cat_date = $categorie->getcat_date();
-        $nom_cat = $categorie->getnom_cat();
         
-
-        $stmt->bindParam(':cat_date', $cat_date);
-        $stmt->bindParam(':nom_cat', $nom_cat);
-        
-
-
-        try {
-            $stmt->execute();
-        } catch (PDOException $e) {
-            throw $e;
-        }
-       
-}
-public function update_categorie($categorie)
-    {
-        $query = "UPDATE categorie SET 
-                  nom_cat = :nom_cat, 
-                  cat_date = :cat_date,
-                  WHERE nom_cat = :nom_cat";
-
-        $stmt = $this->db->prepare($query);
-
-        $nom_cat = $categorie->getnom_cat();
-        $cat_date = $categorie->getcat_date();
-       
-
-        $stmt->bindParam(':nom_cat', $nom_cat);
-        $stmt->bindParam(':cat_date', $cat_date);
-       
-
-        try {
-            $stmt->execute();
-            echo "Record updated successfully.";
-        } catch (PDOException $e) {
-            throw $e;
-        }
+        $id = $caty->getCategoryId();
+        $name = $caty->getCategoryName();
+        $date = $caty->getCategoryDate();
+    
+        $stmt->bindParam(':categoryId', $id);
+        $stmt->bindParam(':categoryName', $name);
+        $stmt->bindParam(':categoryDate', $date);
+    
+        $stmt->execute();
     }
-    public function delete_categorie($id)
-    {
-        $query = "UPDATE categorie WHERE name = :nom_cat";
-        $stmt = $this->db->prepare($query);
-
-        $stmt->bindParam(':nom_cat', $id);
-
-        try {
-            $stmt->execute();
-            echo "Record deleted successfully.";
-        } catch (PDOException $e) {
-            throw $e;
-        }
-    }
+    
 }
-
-?>
+// $categoryController = new categoryDAO();
+// $res = $categoryController->getAllCategorys();
+// print_r($res);

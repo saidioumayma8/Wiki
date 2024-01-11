@@ -1,35 +1,38 @@
 <?php
-class utilisateur
-{
+
+class User {
+    private $user_id;
+    private $username ;
     private $email;
-    private $nom;
-    private $pswd;
+    private $password;
     private $role;
 
-    public function __construct($email, $nom, $pswd, $role)
+    public function __construct($user_id, $username , $email, $password, $role)
     {
+        $this->user_id = $user_id;
+        $this->username  = $username ;
         $this->email = $email;
-        $this->nom = $nom;
-        $this->pswd = $pswd;
+        $this->password = $password;
         $this->role = $role;
     }
 
-    public function getemail()
-    {
+    public function getUserId(){
+        return $this->user_id;
+    }
+
+    public function getName(){
+        return $this->username;
+    }
+
+    public function getEmail(){
         return $this->email;
     }
-    public function getnom()
-    {
-        return $this->nom;
+
+    public function getPassword(){
+        return $this->password;
     }
-    public function getpswd()
-    {
-        return $this->pswd;
-    }
-    public function getrole()
-    {
+
+    public function getRole(){
         return $this->role;
     }
-
-
 }

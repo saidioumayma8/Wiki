@@ -1,65 +1,59 @@
 <?php
-include_once "connection.php";
-include_once "tag.php";
+include 'models\tagModel.php';
 
-
-class tagDAO {
+class tagDAO{
     private $db;
+
     public function __construct(){
-        $this->db = Database::getInstance()->getConnection();
+        $this->db = DataBaseConection::getInstance()->getConnection();
     }
 
-    public function get_tag(){
-        $query = "SELECT * FROM tag";
+    public function getAllTags(){
+        $query ="SELECT * FROM tag";
         $stmt = $this->db->query($query);
-        $stmt -> execute();
-        $vileData = $stmt->fetchAll();
-        $vile= array();
-        foreach ($vileData as $P) {
-            $vile[] = new tag($P["nom_tag"]
-            );
+        $stmt->execute();
+        $tagsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $tags = array();
+        foreach($tagsData as $tag){
+            $result = new tag($tag['tag_id'] ,$tag['tag_name'], $tag['tag_date']);
+            $tags[] = $result;
         }
-        return $vile;
-
+        return $tags;
     }
-    public function insert_tag($tag)
-    {
-        $query = "INSERT INTO tag(nom_tag)  
-                  VALUES (:nom_tag)";
 
+    public function getTagsById($id){
+        $query ="SELECT * FROM tag WHERE tag_id = $id";
+        $stmt = $this->db->query($query);
+        $stmt->execute();
+        $tagsData = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $tagsData;
+    }
+
+    public function insertTag($tags){
+        $query ="INSERT INTO tag (tag_name, tag_date) VALUES (:tag_name, :tag_date)";
         $stmt = $this->db->prepare($query);
+        $name = $tags->getTagName();
+        $date = $tags->getTagDate();
 
-        $nom_tag = $tag->getnom_tag();
-       
-        
+        $stmt->bindParam(':tag_name', $name);
+        $stmt->bindParam(':tag_date', $date);
 
-        $stmt->bindParam(':nom_tag', $nom_tag);
-     
-        
-
-
-        try {
-            $stmt->execute();
-        } catch (PDOException $e) {
-            throw $e;
-        }
-       
+        $stmt->execute();
     }
 
-    public function delete_vile($id)
-    {
-        $query = "UPDATE tag WHERE name = :nom_tag";
+    public function updateTags($tags) {
+        $query = "UPDATE tag SET tag_date = :tagDate, tag_name = :tagName WHERE tag_id = :tagId";
         $stmt = $this->db->prepare($query);
+        
+        $name = $tags->getTagName();
+        $date = $tags->getTagDate();
+        $id = $tags->getTagId();
 
-        $stmt->bindParam(':nom_tag', $id);
 
-        try {
-            $stmt->execute();
-            echo "Record deleted successfully.";
-        } catch (PDOException $e) {
-            throw $e;
-        }
+        $stmt->bindParam(':tagDate', $date);
+        $stmt->bindParam(':tagName', $name);
+        $stmt->bindParam(':tagId', $id);
+    
+        $stmt->execute();
     }
-}
-
-?>
+}    

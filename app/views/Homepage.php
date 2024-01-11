@@ -1,4 +1,7 @@
-
+<?php 
+$title = "Homepage";
+ob_start();
+?>
         <!-- MENU SIDEBAR-->
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
@@ -111,30 +114,22 @@
                             </div>
                             
                         </div>
-                        <div class="row">
+                        <div class="row d-flex justify-content-between">
+                                <?php foreach ($wiki as $article) : ?>
+                                    <div class="card col-md-4">
+                                        <div>
+                                            <h1>Blog Card</h1>
+                                        </div>
+                                        <section>
+                                            <h3><?= $article['title']; ?></h3>
+                                            <img src="<?= $article['img']; ?>" alt="" width="40%" height="40%">
+                                            <p><?= $article['contenu']; ?></p>
+                                            <p class="date"><?= $article['wiki_date']; ?></p>
+                                        </section>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
 
-                        <div class="card" style="width: 60rem;">
-                        <div class="col-md-9">
-                            <div class="card-body">
-                            <div class="col-md-9">
-                                <h5 class="card-title">Geoffrey Chaucer</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Biographie</h6>
-                                <p class="card-text">Some quick example text to build on the card title  bulk of the card's content.</p>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="card " style="width: 18rem;">
-                                <div class="card-body">
-                                    <h5 class="card-title">Geoffrey Chaucer</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">Biographie</h6>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                </div>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                                </div>
-                            </div>
-                
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="copyright">

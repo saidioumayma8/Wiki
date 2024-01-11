@@ -1,98 +1,70 @@
 <?php
-include_once "connection.php" ;
-include_once "utilisateur.php" ;
-
-
-class utilisateurDAO {
+// include '../../configuration/conection.php';
+include 'models\userModel.php';
+class UserDAO {
     private $db;
-    public function __construct(){
-        $this->db = Database::getInstance()->getConnection();
+
+    public function __construct()
+    {
+        $this->db = DataBaseConection::getInstance()->getConnection();
     }
 
-    public function get_utilisateur(){
-        $query = "SELECT * FROM utilisateur";
+    public function getuserbyid($id){
+        $query = "SELECT * FROM users where user_id =$id";
         $stmt = $this->db->query($query);
-        $stmt -> execute();
-        $utilisateurData = $stmt->fetchAll();
-        $utilisateur= array();
-        foreach ($utilisateurData as $P) {
-            $utilisateur[] = new utilisateur($P["email"],$P["nom"], $P["pswd"], $P["role"]
-            );
-        }
-        return $utilisateur;
+        $stmt->execute();
+        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+            $result = new User($userData['user_id'], $userData['username'], $userData['email'], $userData['password'], $userData['role']);
+           
+        return $result;
 
     }
-    public function insert_utilisateur($utilisateur)
+
+    public function getAllUsers()
     {
-        $query = "INSERT INTO utilisateur(email, nom, pswd, role) 
-                  VALUES (:email, :nom, :pswd, :role )";
-
+        $query = "SELECT * FROM users";
+        $stmt = $this->db->query($query);
+        $stmt->execute();
+        $userData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $users = array();
+        foreach ($userData as $user) {
+            $result = new User($user['user_id'], $user['username '], $user['email'], $user['password'], $user['role']);
+            $users[] = $result;
+        }
+        return $users;
+    }
+    public function regester($user) {
+        $query = "INSERT INTO users (email, username , password) VALUES (:email, :username, :password)";
         $stmt = $this->db->prepare($query);
-
-        $email = $utilisateur->getemail();
-        $nom = $utilisateur->getnom();
-        $pswd = $utilisateur->getpswd();
-        $role = $utilisateur->getrole();
-        
+        $email = $user->getEmail();
+        $username  = $user->getName();
+        $password = $user->getPassword();
+        // Bind parameters
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', $password);
+    
+        // Execute the query
+        $stmt->execute();
+    }
+    public function login($user){
+        $query = "SELECT * FROM users WHERE email = :email AND password = :password";
+        $stmt = $this->db->prepare($query);
+        $email = $user->getEmail();
+        $password = $user->getPassword();
 
         $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':nom', $nom);
-        $stmt->bindParam(':pswd', $pswd);
-        $stmt->bindParam(':role', $role);
-        
+        $stmt->bindParam(':password', $password);
 
-
-        try {
-            $stmt->execute();
-        } catch (PDOException $e) {
-            throw $e;
-        }
+        $stmt->execute();
+        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+        // $result = array();
        
-}
-public function update_utilisateur($utilisateur)
-    {
-        $query = "UPDATE utilisateur SET 
-                  email = :email, 
-                  nom = :nom,
-                  pswd = :pswd,
-                  role = :role,
-                  WHERE nom = :nom";
-
-        $stmt = $this->db->prepare($query);
-
-        $email = $utilisateur->getemail();
-        $nom = $utilisateur->getnom();
-        $pswd = $utilisateur->getpswd();
-        $role = $utilisateur->getrole();
-       
-
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':nom', $nom);
-        $stmt->bindParam(':pswd', $pswd);
-        $stmt->bindParam(':role', $role);
-       
-
-        try {
-            $stmt->execute();
-            echo "Record updated successfully.";
-        } catch (PDOException $e) {
-            throw $e;
-        }
+        return $userData;
     }
-    public function delete_utilisateur($id)
-    {
-        $query = "UPDATE utilisateur WHERE name = :nom";
-        $stmt = $this->db->prepare($query);
 
-        $stmt->bindParam(':nom', $id);
-
-        try {
-            $stmt->execute();
-            echo "Record deleted successfully.";
-        } catch (PDOException $e) {
-            throw $e;
-        }
-    }
+    
 }
 
-?>
+ 

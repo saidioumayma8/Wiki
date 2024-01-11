@@ -1,93 +1,73 @@
 <?php
+// include '../models/DAO/userDAO.php';
+// include '../controllers/userController.php';
 
-class utilisateurController
-{
-    private $utilisateurDAO;
 
-    public function __construct()
-    {
-        $this->utilisateurDAO = new utilisateurDAO();
-    }
+// $userController = new UserController(new UserDAO());
+// $userController->addUser();
 
-    public function showLoginForm()
-    {
-        include_once 'app/views/authent/login.php';
-    }
+class UserController {
 
-    public function login()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    public function addUser(){
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $name = $_POST['username '];
             $email = $_POST['email'];
             $password = $_POST['password'];
 
-            $result = $this->utilisateurDAO->login($email, $password);
+            $addUser = new User(0,$name, $email, $password, null);
+            
+            $result = new UserDAO();
+            $result->regester($addUser);
+            
+    
+            if ($result) {
+                    header('location: index.php?action=regester');                
+            } else {
+                echo 'Error adding user to the database.';
+            }
+        }
+        include 'views\userView.php';
+    }
 
-            if ($result['success']) {
-                // Get user information, including the role and user_id
-                $user = $this->utilisateurDAO->getUserByEmail($email);
+    public function login() {
+        // echo 'chi lkjkjkjkjkjkjkjkjkjkjkjkj';
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
+            $email = $_POST['email'];
+            $password = $_POST['password'];
 
-                $_SESSION['user_id'] = $user->getId();  // Assuming getId() is the method to retrieve the user_id
-                $_SESSION['user'] = $user;
+            $user = new User('', '', $email, $password, null);
+            $userDAO = new UserDAO();
+            $user = $userDAO->login($user);
 
-                // Check the user's role and redirect accordingly
-                if ($user && $user->getRole() === 'admin') {
-                    // Admin login successful, redirect to admin page
-                    header('Location: index.php?action=adminpage');
-                    exit();
-                } elseif ($user && $user->getRole() === 'author') {
-                    // Author login successful, redirect to author page
-                    header('Location: index.php?action=authorpage');
-                    exit();
+            if (!empty($user)) {
+                if ($user['role'] == 0) {
+                    session_start();
+                    $userId = $user['user_id'];
+                    $_SESSION['user_id'] = $userId;
+                    header('location: views\categoryView.php');
                 } else {
-                    // Default redirect for other roles or unexpected cases
-                    header('Location: index.php?action=home');
-                    exit();
+                    header('location: views\Autuer.php');
                 }
             } else {
-                // Login failed, display error message
-                $errorMessage = $result['message'];
-                include_once 'app/views/auth/login.php';
+                echo '<p>it\'s empty</p>';
             }
-        }
+            
+
+            
+        // Include your login view file
+        include "views\login.php";
     }
-
-
-    public function showregisterForm()
-    {
-        include_once 'app/views/authent/register.php';
-    }
-
-    public function register()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = $_POST['username'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-
-            $result = $this->utilisateurDAO->registerUser($username, $email, $password);
-
-            if ($result['success']) {
-                // Registration successful, redirect to login page
-                header('Location: index.php?action=login');
-                exit();
-            } else {
-                // Registration failed, display error message
-                $errorMessage = $result['message'];
-                include_once 'app/views/auth/register.php';
-            }
-        }
-    }
-
-    public function logout()
-    {
-        // Unset all session variables
-        $_SESSION = array();
-        // Destroy the session
-        session_destroy();
-        // Redirect to the login page
-        header("Location: index.php?action=login");
-        exit();
-    }
+ 
 }
+    public function login_form() {
+         include "views\login.php";
 
+        }
+    public function regester_form() {
+            include "views\userView.php";
+   
+       }
+
+}
 ?>

@@ -1,47 +1,44 @@
 <?php
-class wiki
-{
+class wiki {
+    private $id;
+    private $name;
     private $contenu;
-    private $id_w;
-    private $img;
-    private $isArchive;
-    private $title;
+    private $user_id;
+    private $category_id;
     private $wiki_date;
+    private $is_hide;
 
-    public function __construct($contenu, $id_w, $img, $isArchive, $title, $wiki_date)
+    public function __construct($id, $name, $contenu, $user_id, $category_id, $wiki_date, $is_hide)
     {
+        $this->id = $id;
+        $this->name = $name;
         $this->contenu = $contenu;
-        $this->id_w = $id_w;
-        $this->img = $img;
-        $this->isArchive = $isArchive;
-        $this->title = $title;
+        $this->user_id = $user_id;
+        $this->category_id = $category_id;
         $this->wiki_date = $wiki_date;
+        $this->is_hide = $is_hide;
     }
 
-    public function getcontenu()
-    {
+    public function getId(){
+        return $this->id;
+    }
+    public function getName(){
+        return $this->name;
+    }
+    public function getContenu(){
         return $this->contenu;
     }
-    public function getid_w()
-    {
-        return $this->id_w;
+    public function getUserId(){
+        return $this->user_id;
     }
-    public function getimg()
-    {
-        return $this->img;
+    public function getCategoryId(){
+        return $this->category_id;
     }
-    public function getisArchive()
-    {
-        return $this->isArchive;
-    }
-    public function gettitle()
-    {
-        return $this->title;
-    }
-    public function getwiki_date()
-    {
+    public function getWikiDate(){
         return $this->wiki_date;
     }
-
+    public function getisHidden(){
+        return $this->is_hide;
+    }
 
 }
