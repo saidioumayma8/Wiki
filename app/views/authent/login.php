@@ -20,7 +20,32 @@ ob_start();
                             </div>
                         <?php endif; ?>
                         <div class="login-form">
-                            <form action="" method="post">
+                            <?php
+                            if(isset($_POST["login"])){
+                                $email = $_POST["email"];
+                                $password = $_POST["password"];
+                                require_once "app/models/connection.php";
+                                $sql = "SELECT * FROM users WHERE email = '$email'";
+                                $result = mysqli_query($conn, $sql);
+                                $user = mysqli_fetch_array($result, MYSQLI_ASSOC);
+                                if ($user){
+                                    if (password_verify($password, $user["password"])){
+                                        session_start();
+                                        $_SESSION['user'] = "yes";
+                                        header("location : index.php");
+                                        die();
+                                    }
+                            }else{
+                                echo "<div class=\"alert alert-danger>email does not match</div>";
+                            }
+                        }else{
+                            echo "<div class=\"alert alert-danger'>email does not match</div>";
+                        }
+
+                        
+                            
+                            ?>
+                            <form action="login.php" method="post">
                                 <div class="form-group">
                                     <label>Email Address</label>
                                     <input class="au-input au-input--full" type="email" name="email" placeholder="Email">

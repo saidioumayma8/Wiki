@@ -31,9 +31,8 @@
     <link href="vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
-
     <!-- Main CSS-->
-    <link href="../../public/css/theme.css" rel="stylesheet" media="all">
+    <link href="./public/css/theme.css" rel="stylesheet" media="all">
 
 </head>
 
@@ -76,21 +75,20 @@
         <!-- MENU SIDEBAR-->
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
-                <a href="#">
-                    <img src="../../public/img/WhatsApp Image 2024-01-08 at 14.41.27_d532e9ea.jpg" alt="Cool Admin" width="40%"; height="40%"/>
+                <a href="homepage.php">
+                    <img src="./public/img/WhatsApp Image 2024-01-08 at 14.41.27_d532e9ea.jpg" alt="Cool Admin" width="40%"; height="40%"/>
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
                         <li class="active has-sub">
-                            <a class="js-arrow" href="Homepage.php">Home</a>
+                            <a class="js-arrow" href="#">
+                                <i href="index.html" class="fa-solid fa-arrow-right"></i>Home</a>
                         </li>
                         <li>
-                            <a href="signup.php"></i>sign up</a>
-                        </li>
-                        <li>
-                            <a href="signup.php"></i>sign up</a>
+                            <a href="signup.php">
+                                <i  class="fas fa-desktop"></i>sign up</a>
                         </li>
                     </ul>
                 </nav>
@@ -218,35 +216,63 @@
                             </div>
                             
                         </div>
-                        <div class="row d-flex justify-content-between">
-                                <?php foreach ($wiki as $article) : ?>
-                                    <div class="card col-md-4">
-                                        <div>
-                                            <h1>sport</h1>
-                                        </div>
-                                        <section>
-                                            <h3><?= $article['title']; ?></h3>
-                                            <img src="<?= $article['img']; ?>" alt="" width="40%" height="40%">
-                                            <p><?= $article['contenu']; ?></p>
-                                            <p class="date"><?= $article['wiki_date']; ?></p>
-                                        </section>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                            <div class="row d-flex justify-content-between">
-                                <div class="card ">
-                                <div>
-                                    <h2>Hestorie</h2>
-                                </div>
-                                <section>
-                                <h3>Natural beauty. which is grateful in Bangladesh.</h3>
-                                <img src="" alt="">
-                                <p class="date">12th December, 2020</p>
-                                <p>Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections.</p>
-                                
-                                </section>
-                                </div>
-                                </div>
+                        <div class="row">
+  <div class="card ">
+    <div class="card__header">
+      <img src="" alt="card__image" class="card__image" width="600">
+    </div>
+    <div class="card__body">
+      <span class="tag tag-blue">Technology</span>
+      <h4>What's new in 2022 Tech</h4>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem!</p>
+    </div>
+    <div class="card__footer">
+      <div class="user">
+        <img src="" alt="user__image" class="user__image">
+
+          <small>2h ago</small>
+   
+    </div>
+  </div>
+  <div class="card">
+    <div class="card__header">
+      <img src="" alt="card__image" class="card__image" width="600">
+    </div>
+    <div class="card__body">
+      <span class="tag tag-brown">Food</span>
+      <h4>Delicious Food</h4>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem!</p>
+    </div>
+    <div class="card__footer">
+      <div class="user">
+        <img src="" alt="user__image" class="user__image">
+
+          <small>Yesterday</small>
+  
+    </div>
+  </div>
+  <div class="card">
+    <div class="card__header">
+      <img src="" alt="card__image" class="card__image" width="600">
+    </div>
+    <div class="card__body">
+      <span class="tag tag-red">Automobile</span>
+      <h4>Race to your heart content</h4>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem!</p>
+    </div>
+    <div class="card__footer">
+      <div class="user">
+
+          <small>2d ago</small>
+     
+    </div>
+  </div>
+</div>
+  </div>
+  </div>
+                        </div>
+                    </div>
+                </div>
 
                         <div class="row">
                             <div class="col-md-12">
@@ -283,13 +309,12 @@
 	<script src="vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
 	<script src="vendor/chartjs/Chart.bundle.min.js"></script>
 	<script src="vendor/select2/select2.min.js">
-
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 	</script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-
 
 	<!-- Main JS-->
-	<script src="../../public/js/main.js"></script>
+	<script src="public/js/main.js"></script>
 
 </body>
 
